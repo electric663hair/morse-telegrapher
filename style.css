@@ -1,8 +1,16 @@
+::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+
 html {
     background-color: black;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
 }
 
 * {
+    user-select: none;
     margin: 0;
     padding: 0;
 }
@@ -10,7 +18,8 @@ html {
 body {
     background-color: #70aa70;
     width: 100vw;
-    height: 100vh;
+    min-height: calc(100vh - 50px);
+    padding-bottom: 50px;
 }
 
 #content {
@@ -47,7 +56,6 @@ nav {
     background-color: gray;;
 }
 #telegraphKeyContainer {
-    user-select: none;
     background-color: #422c0c;
     color: white;
     height: 150px;
@@ -75,28 +83,91 @@ nav {
     box-shadow: 2px 2px 0 0 #595959; /* box-shadow: offset-x offset-y blur-radius spread-radius color; */
 }
 
+.charTypeTitle {
+    color: #252525;
+    text-shadow: 1.2px 1.2px 0 #422c0c;
+    font-weight: 900;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+    border-bottom: black solid 2px;
+}
 .alphabet {
     height: calc(100% - 150px);
     width: 100%;
 }
-#characters {
+.letters,.numbers,.symbols {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    flex-wrap: wrap;
-    gap: 10px;
-    height: 70%;
+    gap: 4px;
 }
-#characters .character {
+.characters {
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    width: 25%;
+    gap: 25px;
+    margin: 0 50px;
+}
+.character {
+    display: flex;
+    justify-content: start;
+    padding-left: 10px;
     align-items: center;
-    height: 50px;
-    width: 150px;
+    height: 40px;
+    width: 85px;
+    gap: 8px;
     background-color: #598959;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     font-size: 20px;
+    color: #ffee00;
+}
+.character .morseText {
+    font-size: 25px;
+}
+
+.subContent {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 75%;
+    margin-left: calc(25% / 2);
+    margin-right: calc(25% / 2);
+}
+.consoleWindow {
+    background-color: #321c0c;
+    height: 300px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+.console {
+    color: white;
+    width: 90%;
+    height: 40%;
+    background-color: #422c0c;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding: 0 15px 10px 15px;
+}
+.copyButton {
+    position: relative;
+    top: 5px;
+    right: calc(-100% + 40px + 10px + 5px + 5px); /* -width of box, + width + padding + 5px + (shadow offset x + 3px)*/
+    width: 40px;
+    padding: 5px;
+    background-color: #313131;
+    border-radius: 5px;
+    border: #595959 solid 2px;
+    box-shadow: 2px 2px 0 #595959;
+    cursor: pointer;
+}
+.copyText {
+    margin-top: 15px;
 }
 
 .hidden {
