@@ -2,22 +2,23 @@ const navButtons = document.querySelectorAll("nav .navButton");
 const alphabet = document.querySelector(".alphabet");
 const simulator = document.querySelector(".simulator");
 const keyButton = document.querySelector("#telegraphKeyContainer");
+const copyButtons = document.querySelectorAll(".copyButton");
 let startTime;
 let spaceDown;
 
 keyButton.addEventListener("mousedown", function() {
     startTime = performance.now();
-    keyButton.classList.add("up")
+    keyButton.classList.add("mainBtnDown")
 })
 keyButton.addEventListener("mouseleave", function() {
-    if (keyButton.classList.contains("up")) {
+    if (keyButton.classList.contains("mainBtnDown")) {
         console.log(performance.now() - startTime)
-        keyButton.classList.remove("up")
+        keyButton.classList.remove("mainBtnDown")
     }
 })
 keyButton.addEventListener("mouseup", function() {
     console.log(performance.now() - startTime)
-    keyButton.classList.remove("up")
+    keyButton.classList.remove("mainBtnDown")
 })
 document.addEventListener("keydown", function(event) {
     if (event.code == "Space") {
@@ -26,7 +27,7 @@ document.addEventListener("keydown", function(event) {
         if ( !spaceDown) {
             spaceDown = true;
             startTime = performance.now()
-            keyButton.classList.add("up")
+            keyButton.classList.add("mainBtnDown")
         }
     }
 })
@@ -34,7 +35,7 @@ document.addEventListener("keyup", function(event) {
     if (event.code == "Space") {
         spaceDown = false;
         console.log(performance.now() - startTime)
-        keyButton.classList.remove("up")
+        keyButton.classList.remove("mainBtnDown")
     }
 })
 
@@ -50,6 +51,20 @@ navButtons.forEach(button => {
         }
     })
 })
+
+copyButtons.forEach(button => {
+    button.addEventListener("mousedown", function() {
+        button.classList.add("copyButtonDown")
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(button.parentNode.children[1].textContent)
+        }
+    })
+    const events = ["mouseup", "mouseleave"]
+    events.forEach(event => button.addEventListener(event, function() {
+        button.classList.remove("copyButtonDown")
+    }));
+})
+  
 
 function appendCharacters(element, type) {
     if (type == "l") charactersToAppend = ["A | .-", "B | -...", "C | -.-.", "D | -..", "E | .", "F | ..-.", "G | --.", "H | ....", "I | ..", "J | .---", "K | -.-", "L | .-..", "M | --", "N | -.", "O | ---", "P | .--.", "Q | --.-", "R | .-.", "S | ...", "T | -", "U | ..-", "V | ...-", "W | .--", "X | -..-", "Y | -.--", "Z | --.."]

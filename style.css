@@ -69,7 +69,7 @@ nav {
     border: solid #321c0c 3px;
     box-shadow: 10px 15px 0 0 #321c0c;
 }
-#telegraphKeyContainer.up {
+#telegraphKeyContainer.mainBtnDown {
     position: relative;
     top: 10px;
     left: 7px;
@@ -165,6 +165,12 @@ nav {
     border: #595959 solid 2px;
     box-shadow: 2px 2px 0 #595959;
     cursor: pointer;
+}
+.copyButton.copyButtonDown {
+    top: calc(5px + 2px); /* Default +2px */
+    right: calc(-100% + 40px + 10px + 5px + 5px - 2px); /* Default -2px */
+    box-shadow: 0 0 0 #000;
+
 }
 .copyText {
     margin-top: 15px;
