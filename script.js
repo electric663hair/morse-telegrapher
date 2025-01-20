@@ -60,6 +60,11 @@ function timeSinceLastButtonPress() {
     return (startTime - endTime)
 }
 
+function getLastWord(str) {
+    const words = str.trim().split(' ');
+    return words[words.length - 1];
+}
+
 keyButton.addEventListener("mousedown", function() {
     buttonDown();
 })
@@ -79,6 +84,10 @@ document.addEventListener("keydown", function(event) {
             spaceDown = true;
             buttonDown();
         }
+    }
+    if (event.key == "Backspace") {
+        morseConsole.textContent = morseConsole.textContent.slice(morseConsole.textContent.length - getLastWord(morseConsole.textContent).length, morseConsole.textContent.length-1)
+        updateTxtConsole();
     }
 })
 document.addEventListener("keyup", function(event) {
