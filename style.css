@@ -10,7 +10,6 @@ html {
 }
 
 * {
-    user-select: none;
     margin: 0;
     padding: 0;
 }
@@ -40,6 +39,7 @@ header {
 }
 header h1.title {
     padding-bottom: 20px;
+    user-select: none;
 }
 nav {
     display: flex;
@@ -55,7 +55,7 @@ nav {
 .navButton:hover {
     background-color: gray;;
 }
-#telegraphKeyContainer {
+#telegraphKeyButton {
     background-color: #422c0c;
     color: white;
     height: 150px;
@@ -64,16 +64,42 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
     font-size: 20px;
     cursor: pointer;
     border: solid #321c0c 3px;
     box-shadow: 10px 15px 0 0 #321c0c;
+    user-select: none;
 }
-#telegraphKeyContainer.mainBtnDown {
+#telegraphKeyButton.mainBtnDown {
     position: relative;
     top: 10px;
     left: 7px;
     box-shadow: 3px 5px 0 0 #321c0c;
+}
+.lightBox {
+    height: 50px;
+    width: 50px;
+    background-color: #333;
+    border-radius: 50%;
+    box-shadow: 5px 4px 2px #1f1f1f;
+}
+.lightBox > .light {
+    height: 35px;
+    width: 35px;
+    background-color: red;
+    border-radius: 50%;
+}
+.lightBox > .light.green {
+    height: 35px;
+    width: 35px;
+    background-color: green;
+    border-radius: 50%;
+}
+.lightBox, .light {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .keyboardButton {
     background-color: #313131;
@@ -107,6 +133,7 @@ nav {
     width: 25%;
     gap: 25px;
     margin: 0 50px;
+    user-select: none;
 }
 .character {
     display: flex;
@@ -139,7 +166,7 @@ nav {
     width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
@@ -153,8 +180,10 @@ nav {
     overflow-y: auto;
     overflow-wrap: break-word;
     padding: 0 15px 10px 15px;
+    font-size: 20px;
 }
 .copyButton {
+    display: block;
     position: relative;
     top: 5px;
     right: calc(-100% + 40px + 10px + 5px + 5px); /* -width of box, + width + padding + 5px + (shadow offset x + 3px)*/
@@ -165,6 +194,8 @@ nav {
     border: #595959 solid 2px;
     box-shadow: 2px 2px 0 #595959;
     cursor: pointer;
+    user-select: none;
+    font-size: 15px;
 }
 .copyButton.copyButtonDown {
     top: calc(5px + 2px); /* Default +2px */
@@ -172,8 +203,12 @@ nav {
     box-shadow: 0 0 0 #000;
 
 }
-.copyText {
+.copyText, #newChar {
     margin-top: 15px;
+    margin-right: -5px;
+    user-select: text;
+    cursor: text;
+    display: inline-block;
 }
 
 .hidden {

@@ -35,7 +35,10 @@
 
     <div class="simulator">
         <div id="content">
-            <div id="telegraphKeyContainer">
+            <div id="telegraphKeyButton">
+                <div class="lightBox black">
+                    <div class="light"></div>
+                </div>
                 <p>Press and hold HERE or use the <span class="keyboardButton">space</span> key on your keyboard</p>
             </div>
         </div>
@@ -59,7 +62,8 @@
             <div class="consoleWindow">
                 <div class="console">
                     <p class="copyButton">Copy!</p>
-                    <p class="copyText"></p>
+                    <p class="copyText" id="morseConsole"></p>
+                    <span id="newChar"></span>
                 </div>
                 <div class="console">
                     <p class="copyButton">Copy!</p>
