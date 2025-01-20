@@ -1,9 +1,12 @@
+import { Morse } from './morseTranslator.js';
+const MORSE = new Morse();
 const navButtons = document.querySelectorAll("nav .navButton");
 const alphabet = document.querySelector(".alphabet");
 const simulator = document.querySelector(".simulator");
 const keyButton = document.querySelector("#telegraphKeyButton");
 const copyButtons = document.querySelectorAll(".copyButton");
 const morseConsole = document.querySelector("#morseConsole");
+const txtConsole = document.querySelector("#txtConsole");
 const light = document.querySelector(".light");
 const newChar = document.querySelector("#newChar");
 let startTime;
@@ -12,11 +15,15 @@ let spaceDown;
 let character;
 let unitTime = 130;
 
+function updateTxtConsole() {
+    txtConsole.textContent = MORSE.translateString(morseConsole.textContent);
+}
+
 function buttonDown() {
     startTime = performance.now()
     light.classList.add("green");
     if (timeSinceLastButtonPress() > unitTime * 7) {
-        morseConsole.textContent += " /"
+        morseConsole.textContent += " / "
     } else if (timeSinceLastButtonPress() > unitTime * 3) {
         morseConsole.textContent += " "
     }
@@ -39,6 +46,7 @@ function buttonUp() {
     light.classList.remove("green");
     getTime();
     morseConsole.textContent += `${ditOrDa()}`;
+    updateTxtConsole();
     keyButton.classList.remove("mainBtnDown")
     light.textContent = ""
     newChar.textContent = ""
@@ -48,7 +56,7 @@ function getTime() {
     console.log(parseFloat((endTime - startTime).toFixed(2)))
 }
 function timeSinceLastButtonPress() {
-    console.log("time since btn click:", parseFloat((startTime - endTime).toFixed(2)))
+    // console.log("time since btn click:", parseFloat((startTime - endTime).toFixed(2)))
     return (startTime - endTime)
 }
 
@@ -118,6 +126,7 @@ function ditOrDa() {
   
 
 function appendCharacters(element, type) {
+    let charactersToAppend = []
     if (type == "l") charactersToAppend = ["A | .-", "B | -...", "C | -.-.", "D | -..", "E | .", "F | ..-.", "G | --.", "H | ....", "I | ..", "J | .---", "K | -.-", "L | .-..", "M | --", "N | -.", "O | ---", "P | .--.", "Q | --.-", "R | .-.", "S | ...", "T | -", "U | ..-", "V | ...-", "W | .--", "X | -..-", "Y | -.--", "Z | --.."]
     else if (type == "n") charactersToAppend = ["1 | .----", "2 | ..---", "3 | ...--", "4 | ....-", "5 | .....", "6 | -....", "7 | --...", "8 | ---..", "9 | ----."]
     else if (type == "s") charactersToAppend = [". | .-.-.-", ", | --..--", "? | ..--..", "! | -.-.--", "/ | -..-.", "( | -.--.", ") | -.--.-", "& | .-...", ": | ---...", "; | -.-.-.", "= | -...-", "+ | .-.-.", "- | -....-", "_ | ..--.-", "\" | .-..-.", "$ | ...-..-", "@ | .--.-.", "Æ | .-.-", "Ø | ---.", "Å | .--.-"]
