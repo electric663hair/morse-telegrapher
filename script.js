@@ -1,5 +1,3 @@
-import { Morse } from './morseTranslator.js';
-const MORSE = new Morse();
 const navButtons = document.querySelectorAll("nav .navButton");
 const alphabet = document.querySelector(".alphabet");
 const simulator = document.querySelector(".simulator");
@@ -13,18 +11,22 @@ let startTime;
 let endTime;
 let spaceDown;
 let character;
+let spaceCount;
 let unitTime = 130;
 
 function updateTxtConsole() {
-    txtConsole.textContent = MORSE.translateString(morseConsole.textContent);
+    txtConsole.textContent = translateString(morseConsole.textContent);
 }
 
 function buttonDown() {
+    spaceCount++;
     startTime = performance.now()
     light.classList.add("green");
     if (timeSinceLastButtonPress() > unitTime * 7) {
-        morseConsole.textContent += " / "
-    } else if (timeSinceLastButtonPress() > unitTime * 3) {
+        if (morseConsole.textContent[morseConsole.textContent.length-2] != "/") {
+            morseConsole.textContent += " / "
+        }
+    } else if (timeSinceLastButtonPress() > unitTime) {
         morseConsole.textContent += " "
     }
     keyButton.classList.add("mainBtnDown")
@@ -32,11 +34,11 @@ function buttonDown() {
     light.textContent = "."
     newChar.textContent = "."
 
+    let currentSpaceCount = spaceCount;
     setTimeout(function() {
-        if (keyButton.classList.contains("mainBtnDown")) {
+        if (keyButton.classList.contains("mainBtnDown") && currentSpaceCount == spaceCount) {
             light.textContent = "-"
             newChar.textContent = "-"
-            character = "-"
         }
     }, unitTime * 3)
 }
@@ -44,16 +46,21 @@ function buttonDown() {
 function buttonUp() {
     endTime = performance.now()
     light.classList.remove("green");
-    getTime();
-    morseConsole.textContent += `${ditOrDa()}`;
+    if (getBtnDownTime() < unitTime) {
+        newChar.textContent = "."
+    } else {
+        newChar.textContent = "-"
+    }
+    morseConsole.textContent += newChar.textContent;
     updateTxtConsole();
     keyButton.classList.remove("mainBtnDown")
     light.textContent = ""
     newChar.textContent = ""
 }
 
-function getTime() {
+function getBtnDownTime() {
     console.log(parseFloat((endTime - startTime).toFixed(2)))
+    return parseFloat((endTime - startTime).toFixed(2))
 }
 function timeSinceLastButtonPress() {
     // console.log("time since btn click:", parseFloat((startTime - endTime).toFixed(2)))
@@ -63,6 +70,12 @@ function timeSinceLastButtonPress() {
 function getLastWord(str) {
     const words = str.trim().split(' ');
     return words[words.length - 1];
+}
+
+function removeLastWord(string) {
+    let lastWordLength = getLastWord(string).length
+    let stringLength = string.length
+    return string.slice(0, stringLength-lastWordLength-1)
 }
 
 keyButton.addEventListener("mousedown", function() {
@@ -86,7 +99,7 @@ document.addEventListener("keydown", function(event) {
         }
     }
     if (event.key == "Backspace") {
-        morseConsole.textContent = morseConsole.textContent.slice(morseConsole.textContent.length - getLastWord(morseConsole.textContent).length, morseConsole.textContent.length-1)
+        morseConsole.textContent = removeLastWord(morseConsole.textContent)
         updateTxtConsole();
     }
 })
