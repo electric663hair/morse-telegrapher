@@ -25,8 +25,9 @@ function buttonDown() {
         if (morseConsole.textContent[morseConsole.textContent.length-2] != "/") {
             morseConsole.textContent += " / "
         }
-    } else if (timeSinceLastButtonPress() > unitTime) {
+    } else if (timeSinceLastButtonPress() > unitTime * 3) {
         morseConsole.textContent += " "
+        newChar.textContent = " " + newChar.textContent;
     }
     keyButton.classList.add("mainBtnDown")
     
@@ -100,6 +101,7 @@ document.addEventListener("keydown", function(event) {
     if (event.key == "Backspace") {
         morseConsole.textContent = removeLastWord(morseConsole.textContent)
         updateTxtConsole();
+        endTime = performance.now() - 130
     }
 })
 document.addEventListener("keyup", function(event) {
