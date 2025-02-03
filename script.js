@@ -11,15 +11,14 @@ let startTime;
 let endTime;
 let spaceDown;
 let character;
-let spaceCount;
 let unitTime = 130;
+let daCheckID;
 
 function updateTxtConsole() {
     txtConsole.textContent = translateString(morseConsole.textContent);
 }
 
 function buttonDown() {
-    spaceCount++;
     startTime = performance.now()
     light.classList.add("green");
     if (timeSinceLastButtonPress() > unitTime * 7) {
@@ -34,9 +33,8 @@ function buttonDown() {
     light.textContent = "."
     newChar.textContent = "."
 
-    let currentSpaceCount = spaceCount;
-    setTimeout(function() {
-        if (keyButton.classList.contains("mainBtnDown") && currentSpaceCount == spaceCount) {
+    daCheckID = setTimeout(function() {
+        if (keyButton.classList.contains("mainBtnDown")) {
             light.textContent = "-"
             newChar.textContent = "-"
         }
@@ -56,6 +54,7 @@ function buttonUp() {
     keyButton.classList.remove("mainBtnDown")
     light.textContent = ""
     newChar.textContent = ""
+    clearTimeout(daCheckID);
 }
 
 function getBtnDownTime() {
