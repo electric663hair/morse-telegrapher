@@ -15,7 +15,7 @@ let unitTime = 130;
 let daCheckID;
 
 function updateTxtConsole() {
-    txtConsole.textContent = translateString(morseConsole.textContent);
+    txtConsole.textContent = translateMorse(morseConsole.textContent);
 }
 
 function buttonDown() {
@@ -90,25 +90,48 @@ keyButton.addEventListener("mouseup", function() {
     buttonUp();
 })
 document.addEventListener("keydown", function(event) {
-    if (event.code == "Space") {
+    if (event.code == "Space" && !textareaSelected()) {
         event.preventDefault();
         
-        if ( !spaceDown) {
+        if (!spaceDown) {
             spaceDown = true;
             buttonDown();
         }
-    }
-    if (event.key == "Backspace") {
+    } else if (event.key == "Backspace" && !textareaSelected()) {
         morseConsole.textContent = removeLastWord(morseConsole.textContent)
         updateTxtConsole();
         endTime = performance.now() - 130
+    } else if (event.key.toLowerCase() == "r") {
+        morseConsole.innerHTML = ""
+        txtConsole.innerHTML = ""
     }
 })
 document.addEventListener("keyup", function(event) {
-    if (event.code == "Space") {
+    if (event.code == "Space"  && !textareaSelected()) {
         spaceDown = false;
         buttonUp();
     }
+})
+
+function textareaSelected() {
+    for (let textarea of document.querySelectorAll("textarea")) {
+        if (document.activeElement === textarea) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+document.querySelectorAll("textarea").forEach(area => {
+    area.addEventListener("input", function() {
+        console.log(document.activeElement.id)
+        if (document.activeElement.id == "txtTranslatorInput") {
+            document.querySelector("#morseTranslatorInput").textContent = translateLatin(area.value)
+        } else {
+            document.querySelector("#txtTranslatorInput").textContent = translateMorse(area.value)
+        }
+    })
 })
 
 navButtons.forEach(button => {

@@ -1,81 +1,34 @@
-function translateCharacter(character) {
-    switch (character.toLowerCase()) {
-        case ".-":
-            return "a";
-        case "-...":
-            return "b";
-        case "-.-.":
-            return "c";
-        case "-..":
-            return "d";
-        case ".":
-            return "e";
-        case "..-.":
-            return "f";
-        case "--.":
-            return "g";
-        case "....":
-            return "h";
-        case "..":
-            return "i";
-        case ".---":
-            return "j";
-        case "-.-":
-            return "k";
-        case ".-..":
-            return "l";
-        case "--":
-            return "m";
-        case "-.":
-            return "n";
-        case "---":
-            return "o";
-        case ".--.":
-            return "p";
-        case "--.-":
-            return "q";
-        case ".-.":
-            return "r";
-        case "...":
-            return "s";
-        case "-":
-            return "t";
-        case "..-":
-            return "u";
-        case "...-":
-            return "v";
-        case ".--":
-            return "w";
-        case "-..-":
-            return "x";
-        case "-.--":
-            return "y";
-        case "--..":
-            return "z";
-        case "/":
-            return ""
-        default:
-            return "";
+const morse = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", "/"]
+const latin = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "];
+
+function translateCharacter(char, direction) {
+    if (!direction) {
+        let translation = latin[morse.indexOf(char)]
+        return translation !== undefined ? translation : ""
+    } else {
+        let translation = morse[latin.indexOf(char)]
+        return translation !== undefined ? translation : ""
     }
 }
 
-function translateWord(word) {
-    let txtWord = "";
-    for (let char of word.split(" ")) {
-        txtWord += this.translateCharacter(char)
-    }
-    return txtWord
+function translateMorse(string) {
+    let endString = ""
+    string.split("/").forEach(word => {
+        word.split(" ").forEach(character => {
+            endString += translateCharacter(character, 0)
+        })
+        endString += " "
+    });
+    return endString.slice(0, -1)
 }
 
-function translateString(string) {
-    let txtString;
-    for (let word of string.split(" / ")) {
-        const txtWord = this.translateWord(word)
-        if (!txtString) {
-            txtString = txtWord
-        } else {
-            txtString += ` ${txtWord}`
+function translateLatin(string) {
+    let endString = ""
+    string.split(" ").forEach(word => {
+        for (const character of word) {
+            endString += translateCharacter(character, 1) + " "
         }
-    }
-    return txtString
+        endString += " / "
+    });
+    return endString.slice(0, -4)
 }
